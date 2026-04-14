@@ -7,18 +7,18 @@
     "watch": "nodemon ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "debug": "~4.3.4",
-    "ejs": "~3.1.8",
-    "express": "~4.18.2",
+    "cookie-parser": "^1.4.7",
+    "debug": "^4.4.3",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
     "express-ws": "^5.0.2",
-    "http-errors": "~2.0.0",
-    "morgan": "~1.10.0"
+    "http-errors": "^2.0.1",
+    "morgan": "^1.10.1"
   },
   "devDependencies": {
-    "eslint": "^8.27.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.20"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "globals": "^17.5.0",
+    "nodemon": "^3.1.14"
   }
 }
