@@ -16,6 +16,7 @@
     <script>
         const socket = new WebSocket('ws://localhost:3000/websocket/<%= user %>/messages');
         socket.onopen = function (e) {
+            // here we know the socket is open
             message.onsubmit = event => {
                 event.preventDefault();
                 console.log(content.value)

@@ -6,23 +6,29 @@
   </head>
   <body>
     <h1><%= user %></h1>
+    <!-- action is not used as we send the form programmatically -->
     <form id="message" method="POST" action="send">
         <input type="text" name="message" />
         <input type="submit" value="Send" />
     </form>
+
+    <!-- div used to display the exchanged messages, last message at the top  -->
     <div id="messages"></div>
+
     <script>
       message.onsubmit = event => {
-        event.preventDefault();
+        event.preventDefault(); // prevent form submission
+        // Use URLSearchParams to send data as application/x-www-form-urlencoded instead of multipart/form-data
         let data = new URLSearchParams(new FormData(message));
-        fetch('messages', {method: 'POST', body: data});
+        fetch('messages', {method: 'POST', body: data}); // POST to /longpolling/:user/messages
       }
+
       async function longpolling() {
         let response = await fetch('messages');
         let message = await response.json();
         let html = `<p><b>${message.user}</b>: <i>${message.content}</i>`;
         messages.innerHTML = html + messages.innerHTML;
-        await longpolling();
+        await longpolling(); // recursively call long polling
       }
       longpolling()
     </script>

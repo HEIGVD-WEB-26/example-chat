@@ -3,7 +3,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const chat = new EventEmitter();
+const chat = new EventEmitter(); // Event Bus
 
 /* user page */
 router.get('/:user/', (req, res) => {
@@ -20,10 +20,16 @@ router.post('/:user/messages', (req, res) => {
 });
 
 /* server-side events */
+// Clients register an event listener on the event bus to forward messagesn
+// sent to it on their SSE feed
+
+// When a client sends a message, it is published on the event bus, and sent to all SSEs
+// via the event listeners
 router.get('/:user/messages', (req, res) => {
   res.status(200);
-  res.set('Content-Type', 'text/event-stream');
+  res.set('Content-Type', 'text/event-stream'); // media type for SSE
   res.set('Transfer-Encoding', 'chunked');
+  // create event: message, double return to line needed as format
   const listener = (message) => res.write(`event: message\ndata: ${JSON.stringify(message)}\n\n`);
   chat.on('message', listener);
   res.on('close', () => chat.removeListener('message', listener));

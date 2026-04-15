@@ -19,7 +19,9 @@
             let data = new URLSearchParams(new FormData(message));
             fetch('messages', { method: 'POST', body: data });
         }
-        let eventSource = new EventSource('messages');
+        let eventSource = new EventSource('messages'); // API to connect to server sent events (SSEs)
+        // Listen to "message" events (could be others in the stream)
+        // Event data has format : { event: "message", data: "{"user": "xyz", "content": "abc" }" }
         eventSource.addEventListener('message', event => {
             let message = JSON.parse(event.data);
             let html = `<p><b>${message.user}</b>: <i>${message.content}</i>`;

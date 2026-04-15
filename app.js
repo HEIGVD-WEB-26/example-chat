@@ -7,15 +7,16 @@ const logger = require('morgan');
 const app = express();
 const server = require('http').Server(app);
 
+// express-ws exports a function that takes app and server as params
 require('express-ws')(app, server);
 
-const indexRouter = require('./routes/index');
-const pollingRouter = require('./routes/polling');
-const longpollingRouter = require('./routes/longpolling');
-const sseRouter = require('./routes/sse');
+const indexRouter = require('./routes/index'); // store the exported router from index.js in pollingRouter
+const pollingRouter = require('./routes/polling'); // store the exported router from polling.js in pollingRouter
+const longpollingRouter = require('./routes/longpolling'); // store the exported router from longpolling.js in pollingRouter
+const sseRouter = require('./routes/sse'); // etc...
 const websocketRouter = require('./routes/websocket');
 
-// view engine setup
+// view engine setup, __dirname provides the abs. path where the current file is executing
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -25,9 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/polling', pollingRouter);
-app.use('/longpolling', longpollingRouter);
+app.use('/', indexRouter); // route / to indexRouter
+app.use('/polling', pollingRouter); // route /polling/xyz to pollingRouter
+app.use('/longpolling', longpollingRouter); // etc...
 app.use('/sse', sseRouter);
 app.use('/websocket', websocketRouter);
 
